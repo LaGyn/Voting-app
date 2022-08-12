@@ -43,7 +43,7 @@ Poikkeuksellinen toiminta: Rekisteröinti ei onnistu.
 Nimi: Kirjautuminen
 Käyttäjät: User, Admin.
 Laukaisija: Käyttäjän toimesta.
-Esiehto: User on rekisteröitynyt. Admintili olemassa.
+Esiehto: User on rekisteröitynyt. Admintili luotu.
 Jälkiehto: Käyttäjätunnus ja salasana ovat oikeat.
 Käyttötapauksen kulku: Käyttäjä seuraa www-linkkiä sovelluksen etusivulle, jossa on kirjautumiskentät. Käyttäjä kirjaa kentille käyttäjätunnuksen ja salasanan. Kirjautumisen jälkeen avautuu sivu jossa äänestyksiä voi valita ja tarkastella sekä äänestää. Admin tilin käyttäjälle aukeaa sovelluksen ylläpitosivu.
 Poikkeuksellinen toiminta: Kirjautuminen ei onnistu.
@@ -51,47 +51,47 @@ Poikkeuksellinen toiminta: Kirjautuminen ei onnistu.
 Nimi: Selaa käyttäjiä
 Käyttäjät: Admin
 Laukaisija: Käyttäjän toimesta.
-Esiehto: Käyttäjä on kirjautunut. 
-Jälkiehto: -
+Esiehto: Admintili on luotu.
+Jälkiehto: Käyttäjä on kirjautunut. 
 Käyttötapauksen kulku: Käyttäjä kirjautuu ylläpitosivulle, jossa voi tarkastella käyttäjiä, sekä lisätä että poistaa niitä.
 Poikkeuksellinen toiminta: Sivua ei löydy.
 
 Nimi: Selaa äänestyksiä
 Käyttäjät: Admin
 Laukaisija: Käyttäjän toimesta. 
-Esiehto: Käyttäjä on kirjautunut.
-Jälkiehto: -
+Esiehto: Admintili on luotu.
+Jälkiehto: Käyttäjä on kirjautunut.
 Käyttötapauksen kulku: Kirjauduttuaan käyttäjälle avautuu ylläpitosivu, jossa on mahdollista tarkastella äänestyksiä, sekä luoda että poistaa niitä. 
 Poikkeuksellinen toiminta: Sivua ei löydy.
 
 Nimi: Lisää käyttäjän
 Käyttäjät: Admin
 Laukaisija: Käyttäjän toimesta.
-Esiehto: Käyttäjä on kirjautunut.
-Jälkiehto: Lisättävä käyttäjä (user) on rekisteröitynyt.
-Käyttötapauksen kulku: 
-Poikkeuksellinen toiminta:
+Esiehto: Käyttäjä (admin) on kirjautunut.
+Jälkiehto: Lisättävä käyttäjä ei ole vielä listallla.
+Käyttötapauksen kulku: Käyttäjä (admin) on kirjautunut ylläpitosivustolle, jossa on mahdollista lisätä käyttäjä (user) mikäli tämä ei jostain syystä pysty itse rekisteröitymään. Lisäys tapahtuu erillisellä lomakkeella.
+Poikkeuksellinen toiminta: Lisäys ei onnistu.
 
 Nimi: Poistaa käyttäjän
-Käyttäjät: 
-Laukaisija: 
-Esiehto: 
-Jälkiehto: 
-Käyttötapauksen kulku: 
-Poikkeuksellinen toiminta:
+Käyttäjät: Admin
+Laukaisija: Käyttäjän toimesta.
+Esiehto: Käyttäjä (admin) on kirjautunut.
+Jälkiehto: Lisättävä käyttäjä (user) on rekisteröitynyt.
+Käyttötapauksen kulku: Käyttäjä (admin) on kirjautunut ylläpitosivulle, jossa on mahdolllista poistaa käyttäjä (user). Poistaminen tapahtuu valitsemalla käyttäjä ja deletoimalla se.
+Poikkeuksellinen toiminta: Poistaminen ei onnistu.
 
 Nimi: Luo uusia äänestyksiä
-Käyttäjät: 
-Laukaisija: 
-Esiehto: 
-Jälkiehto: 
-Käyttötapauksen kulku: 
-Poikkeuksellinen toiminta:
+Käyttäjät: Admin
+Laukaisija: Käyttäjän toimesta.
+Esiehto: Käyttäjä on kirjautunut.
+Jälkiehto: Äänestys on uusi.
+Käyttötapauksen kulku: Käyttäjä (admin) on kirjautunut ylläpitosivulle, jossa on linkki äänestyksen luonti-lomakkeelle.
+Poikkeuksellinen toiminta: Äänestyksen luonti ei onnistu.
 
 Nimi: Poistaa äänestyksiä
-Käyttäjät: 
-Laukaisija: 
-Esiehto: 
-Jälkiehto: 
-Käyttötapauksen kulku: 
-Poikkeuksellinen toiminta:
+Käyttäjät: Admin
+Laukaisija: Käyttäjän toimesta.
+Esiehto: Käyttäjä on kirjautunut.
+Jälkiehto: Äänestys on luotu.
+Käyttötapauksen kulku: Käyttäjä on kirjautunut ylläpitosivulle ja valitsee poistettavan äänestyksen ja poistaa sen. 
+Poikkeuksellinen toiminta: Äänestyksen poistaminen ei onnistu.
