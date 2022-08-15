@@ -41,11 +41,11 @@
                     <form name="signupform">
                         <div class="mb-3">
                             <label for="first-name" class="col-form-label">First Name:</label>
-                            <input type="text" class="form-control" id="first-name" required/>
+                            <input type="text" class="form-control" id="firstname" required/>
                         </div>
                         <div class="mb-3">
                             <label for="last-name" class="col-form-label">Last Name:</label>
-                            <input type="text" class="form-control" id="last-name" required/>
+                            <input type="text" class="form-control" id="lastname" required/>
                         </div>
                         <div class="mb-3">
                             <label for="address" class="col-form-label">Address:</label>
@@ -61,7 +61,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="user-name" class="col-form-label">User Name:</label>
-                            <input type="text" class="form-control" id="user-name" required/>
+                            <input type="text" class="form-control" id="username" required/>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="col-form-label">Password:</label>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-primary" onclick="addUser();">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -96,7 +96,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-primary" id="logIn">Log in</button>
                         </div>
                     </form>
                 </div>
