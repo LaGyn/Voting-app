@@ -1,6 +1,6 @@
 
-let username = document.getElementById("username");
-let password = document.getElementById("password");
+let username = "";
+let password = "";
 let admin = {
     username: "yllapito",
     password: "lintu", 
@@ -42,19 +42,20 @@ function addUser(){
 
 let tulosta = "";
 function logIn(){
-    let appliedName = document.getElementById("username").value;
-    let appliedPassword = document.getElementById("password").value;
+    let appliedName = document.getElementById("Username").value;
+    let appliedPassword = document.getElementById("Password").value;
     let inList = false;
     for (let i = 0; i < users.length; i++){
-        if (users[i].username == appliedName){
+        if (users[i].username == appliedName && users[i].password == appliedPassword){
             inList = true;
             tulosta = "true";
         }
-        else if(inList == false){
+        else if (inList == false){
             tulosta = "false!";
         }
         alert(tulosta);
+        document.getElementById("Username").value = "";
+        document.getElementById("Password").value = "";
     }
-    document.getElementById("username").value = "";
-    document.getElementById("password").value = "";
+    
 }
