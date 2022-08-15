@@ -1,7 +1,11 @@
 
 let username = document.getElementById("username");
 let password = document.getElementById("password");
-let users = [];
+let admin = {
+    username: "yllapito",
+    password: "lintu", 
+};
+let users = [admin];
 
 //Constructor:
 function User(firstname, lastname, address, zipcode, email, username, password){
@@ -15,21 +19,42 @@ function User(firstname, lastname, address, zipcode, email, username, password){
 }
 
 function addUser(){
-    let firstname = document.getElementById("firstname");
-    let lastname = document.getElementById("lastname");
-    let address = document.getElementById("address");
-    let zipcode = document.getElementById("zipcode");
-    let email = document.getElementById("email");
-    let username = document.getElementById("username");
-    let password = document.getElementById("password");
+    let firstname = document.getElementById("firstname").value;
+    let lastname = document.getElementById("lastname").value;
+    let address = document.getElementById("address").value;
+    let zipcode = document.getElementById("zipcode").value;
+    let email = document.getElementById("email").value;
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
 
     let user;
     user = new User(firstname, lastname, address, zipcode, email, username, password);
     users.push(user);
+
+    document.getElementById("firstname").value = "";
+    document.getElementById("lastname").value = "";
+    document.getElementById("address").value = "";
+    document.getElementById("zipcode").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
 }
 
-let admin = {
-    username: "yllapito",
-    password: "lintu",
-    
-};
+let tulosta = "";
+function logIn(){
+    let appliedName = document.getElementById("username").value;
+    let appliedPassword = document.getElementById("password").value;
+    let inList = false;
+    for (let i = 0; i < users.length; i++){
+        if (users[i].username == appliedName){
+            inList = true;
+            tulosta = "true";
+        }
+        else if(inList == false){
+            tulosta = "false!";
+        }
+        alert(tulosta);
+    }
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+}
