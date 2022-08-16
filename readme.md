@@ -42,7 +42,7 @@ Poikkeuksellinen toiminta: Rekisteröinti ei onnistu.
 
 Nimi: Kirjautuminen
 Käyttäjät: User, Admin.
-Laukaisija: Käyttäjän toimesta.
+Laukaisija: Käyttäjän toimesta. Etusivu avautuu kun kirjautuminen on onnistunut.
 Esiehto: User on rekisteröitynyt. Admintili luotu.
 Jälkiehto: Käyttäjätunnus ja salasana ovat oikeat.
 Käyttötapauksen kulku: Käyttäjä seuraa www-linkkiä sovelluksen etusivulle, jossa on kirjautumiskentät. Käyttäjä kirjaa kentille käyttäjätunnuksen ja salasanan. Kirjautumisen jälkeen avautuu sivu jossa äänestyksiä voi valita ja tarkastella sekä äänestää. Admin tilin käyttäjälle aukeaa sovelluksen ylläpitosivu.
