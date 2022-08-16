@@ -25,7 +25,7 @@ submitBtn.addEventListener('submit', addUser)
 submit.addEventListener('submit', logIn)
 
 function addUser(event){
-    //event.preventDefault()
+    event.preventDefault()
 
     let firstname = document.getElementById("firstname").value;
     let lastname = document.getElementById("lastname").value;
@@ -46,13 +46,13 @@ function addUser(event){
     localStorage.setItem('username', username);
     localStorage.setItem('password', password);
 
-   /* document.getElementById("firstname").value = "";
+    document.getElementById("firstname").value = "";
     document.getElementById("lastname").value = "";
     document.getElementById("address").value = "";
     document.getElementById("zipcode").value = "";
     document.getElementById("email").value = "";
     document.getElementById("username").value = "";
-    document.getElementById("password").value = "";*/
+    document.getElementById("password").value = "";
 }
 
 
@@ -64,7 +64,7 @@ function logIn(event){
     let appliedPassword = document.getElementById("Password").value;
     let inList = false;
     if (name == appliedName && word == appliedPassword){
-        window.open('/admin.html');
+        window.open('/home.html');
     }
     for (let i = 0; i < users.length; i++){
         if (appliedName == 'yllapito' && appliedPassword == 'lintu'){
