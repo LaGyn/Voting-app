@@ -13,10 +13,56 @@
     
     <!-- Header -->
 
-    <div class="container-fluid bg-danger ">
+    <header class="container-fluid bg-danger ">
         <h1 class="text-center text-light p-5">Admin</h1>
-    </div>
+    </header>
 
+    <!-- Create a vote -->
+
+    <div class="container">
+        <div class="d-sm-flex align-items-center justify-content-between p-3">
+            <div>
+                <h2>Create a new vote</h2>
+                <form name="signupform">
+                    <div>
+                        <label for="firstname" class="col-form-label">First Name:</label>
+                        <input type="text" class="form-control" id="firstname" required/>
+                    </div>
+                    <div>
+                        <label for="lastname" class="col-form-label">Last Name:</label>
+                        <input type="text" class="form-control" id="lastname" required/>
+                    </div>
+                    <div>
+                        <label for="address" class="col-form-label">Address:</label>
+                        <input type="text" class="form-control" id="address" required/>
+                    </div>
+                    <div>
+                        <label for="zipcode" class="col-form-label">Zip code:</label>
+                        <input type="text" class="form-control" id="zipcode" required/>
+                    </div>
+                    <div>
+                        <label for="email" class="col-form-label">E-mail:</label>
+                        <input type="email" class="form-control" id="email" required/>
+                    </div>
+                    <div>
+                        <label for="username" class="col-form-label">User Name:</label>
+                        <input type="text" class="form-control" id="username" required/>
+                    </div>
+                    <div class="mb-2">
+                        <label for="password" class="col-form-label">Password:</label>
+                        <input type="password" class="form-control" id="password" required/>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" onclick="addUser();">
+                    </div>
+                </form>
+            </div>
+            <div>
+                <h2>Users</h2>
+            </div>
+        </div>
+    </div>
+    <!-- List of votes -->
 
     <script src="main.js"></script>
 </body>
