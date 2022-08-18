@@ -6,6 +6,8 @@ let admin = {
     password: "lintu", 
 };
 let users = [admin];
+let votes = [];
+let candidates = [];
 
 //Constructor:
 function User(firstname, lastname, address, zipcode, email, username, password){
@@ -18,15 +20,23 @@ function User(firstname, lastname, address, zipcode, email, username, password){
     this.password = password;
 }
 
-let submitBtn = document.forms['signupform'];
-let submit = document.forms['loginform'];
+// Constructor:
+function Vote(VoteName, candidates){
+    this.VoteName = VoteName;
+    this.candidates = candidates;
+}
 
-submitBtn.addEventListener('submit', addUser)
-submit.addEventListener('submit', logIn)
+//let submitBtn = document.forms['signupform'];
+//let submit = document.forms['loginform'];
+let addCandBtn = document.getElementById('btn-addCand');
+let addVoteBtn = document.getElementById('btn-addVote');
 
-function addUser(event){
-    event.preventDefault()
+//submitBtn.addEventListener('submit', addUser);
+//submit.addEventListener('submit', logIn);
+addCandBtn.addEventListener('click', addCandidate);
+addVoteBtn.addEventListener('click', addVote);
 
+function addUser(){
     let firstname = document.getElementById("firstname").value;
     let lastname = document.getElementById("lastname").value;
     let address = document.getElementById("address").value;
@@ -38,6 +48,7 @@ function addUser(event){
     let user;
     user = new User(firstname, lastname, address, zipcode, email, username, password);
     users.push(user);
+
     localStorage.setItem('firstname', firstname);
     localStorage.setItem('lastname', lastname);
     localStorage.setItem('address', address);
@@ -55,9 +66,7 @@ function addUser(event){
     document.getElementById("password").value = "";
 }
 
-
-function logIn(event){
-    event.preventDefault()
+function logIn(){
     const name = localStorage.getItem('username');
     const word = localStorage.getItem('password');
     let appliedName = document.getElementById("Username").value;
@@ -76,5 +85,27 @@ function logIn(event){
             window.open('/home.html');
         }
     }
-    
 }
+
+function addCandidate(){
+    let newListItem = document.querySelector('#candidate input[type="text"]').value;
+    let newElement = document.createElement('li');
+    let newText = document.createTextNode(newListItem); // Luodaan elementille tekstisisältö
+    newElement.appendChild(newText); // Lisätään uudelle elementille teksti
+    newElement.className = 'list-item'; // Annetaan uudelle elementille luokkanimi
+   
+    document.querySelector('#item-list').appendChild(newElement);
+    candidates.push(newListItem);
+    document.querySelector('#candidate input[type="text"]').value = "";
+    document.querySelector('#candidate input[type="text"]').focus();
+    console.log(candidates);
+}
+
+function addVote(){
+    let VoteName = document.querySelector('#vote-name input[type="text"]').value;
+    //let candidate = document.getElementsByClassName('list-item').value;
+    let vote = new Vote(VoteName, candidates);
+    votes.push(vote);
+    console.log(votes);
+}
+
