@@ -30,8 +30,8 @@
 
     <!-- Modals -->
 
-    <div class="modal fade" id="signup"> <!--class="modal fade" piilottaa modaalin-->
-        <div class="modal-dialog"> <!--class="modal-dialog" tuo modaalin esiin-->
+    <div class="modal fade" id="signup">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3>Sign up here!</h3>
@@ -68,7 +68,8 @@
                             <input type="password" class="form-control" id="password" required/>
                         </div>
                         <div class="modal-footer">
-                            <input type="submit" class="btn btn-primary" onclick="addUser();">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="addUser();">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -94,7 +95,7 @@
                             <input type="password" class="form-control" id="Password" required/>
                         </div>
                         <div class="modal-footer">
-                            <input type="submit" class="btn btn-primary" onclick="logIn();">
+                            <button type="button" class="btn btn-primary" onclick="logIn();">Submit</button>
                         </div>
                     </form>
                 </div>
