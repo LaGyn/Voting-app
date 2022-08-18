@@ -98,7 +98,7 @@ function addCandidate(){
     candidates.push(newListItem);
     document.querySelector('#candidate input[type="text"]').value = "";
     document.querySelector('#candidate input[type="text"]').focus();
-    console.log(candidates);
+    //console.log(candidates);
 }
 
 function addVote(){
@@ -106,6 +106,15 @@ function addVote(){
     //let candidate = document.getElementsByClassName('list-item').value;
     let vote = new Vote(VoteName, candidates);
     votes.push(vote);
-    console.log(votes);
+    //console.log(votes);
+    let newSelectItem = vote.VoteName;
+    console.log(newSelectItem);
+    let newElem = document.createElement('a');
+    let newtext = document.createTextNode(newSelectItem);
+    newElem.appendChild(newtext);
+    newElem.className = 'vote-item';
+    newElem.href ='#';
+
+    document.querySelector('#printArea').appendChild(newElem);
 }
 
