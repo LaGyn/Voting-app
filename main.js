@@ -7,7 +7,9 @@ let admin = {
 };
 let users = [admin];
 let votes = [];
-let candidates = [];
+let candidates = []; //äänestys kohteet
+let candidateList = []; //sisältää candidates-listat
+let nextVote = 0;
 
 //Constructor:
 function User(firstname, lastname, address, zipcode, email, username, password){
@@ -103,7 +105,6 @@ function addCandidate(){
 
 function addVote(){
     let VoteName = document.querySelector('#vote-name input[type="text"]').value;
-    //let candidate = document.getElementsByClassName('list-item').value;
     let vote = new Vote(VoteName, candidates);
     votes.push(vote);
     //console.log(votes);
@@ -114,7 +115,12 @@ function addVote(){
     newElem.appendChild(newtext);
     newElem.className = 'vote-item';
     newElem.href ='#';
-
+    document.querySelector('#vote-name input[type="text"]').value = "";
+    let emptyarea = document.getElementById('item-list');
+    emptyarea.style.display = 'none';
     document.querySelector('#printArea').appendChild(newElem);
+    
+   /* for (let i = 1; i = candidates.length; i++){
+        candidates.pop();
+    }*/
 }
-
