@@ -88,10 +88,10 @@ function logIn(){
         }
     }
 }
-
+    let newElement;
 function addCandidate(){
     let newListItem = document.querySelector('#candidate input[type="text"]').value;
-    let newElement = document.createElement('li');
+    newElement = document.createElement('li');
     let newText = document.createTextNode(newListItem); // Luodaan elementille tekstisisältö
     newElement.appendChild(newText); // Lisätään uudelle elementille teksti
     newElement.className = 'list-item'; // Annetaan uudelle elementille luokkanimi
@@ -101,26 +101,31 @@ function addCandidate(){
     document.querySelector('#candidate input[type="text"]').value = "";
     document.querySelector('#candidate input[type="text"]').focus();
     //console.log(candidates);
+    
 }
 
 function addVote(){
-    let VoteName = document.querySelector('#vote-name input[type="text"]').value;
-    let vote = new Vote(VoteName, candidates);
-    votes.push(vote);
+    candidateList.push(candidates);
+    candidates = candidateList[nextVote]; // Annetaan äänestyksien listalle juokseva numero
+    
+    let VoteName = document.querySelector('#vote-name input[type="text"]').value; //Äänestyksen nimi otetaan talteen
+    let vote = new Vote(VoteName, candidates); // Luodaan äänestys olio jolla nimi ja äänestettävät asiat
+    votes.push(vote); // Äänestyslistaan lisätään äänestys
     //console.log(votes);
     let newSelectItem = vote.VoteName;
     console.log(newSelectItem);
     let newElem = document.createElement('a');
+    let newElem2 = document.createElement('br');
     let newtext = document.createTextNode(newSelectItem);
     newElem.appendChild(newtext);
     newElem.className = 'vote-item';
     newElem.href ='#';
     document.querySelector('#vote-name input[type="text"]').value = "";
-    let emptyarea = document.getElementById('item-list');
-    emptyarea.style.display = 'none';
     document.querySelector('#printArea').appendChild(newElem);
-    
-   /* for (let i = 1; i = candidates.length; i++){
-        candidates.pop();
-    }*/
+    document.querySelector('#printArea').appendChild(newElem2);
+
+    document.querySelector('#item-list').removeChild(newElement);
+    nextVote++; // Äänestyksien lista menee pykälän eteenpäin
+    candidates = []; //Lista tyhjäksi
 }
+
