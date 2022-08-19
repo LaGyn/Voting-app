@@ -101,7 +101,6 @@ function addCandidate(){
     document.querySelector('#candidate input[type="text"]').value = "";
     document.querySelector('#candidate input[type="text"]').focus();
     //console.log(candidates);
-    
 }
 
 function addVote(){
@@ -124,7 +123,10 @@ function addVote(){
     document.querySelector('#printArea').appendChild(newElem);
     document.querySelector('#printArea').appendChild(newElem2);
 
-    document.querySelector('#item-list').removeChild(newElement);
+    for (let i = 1; i = candidates.length; i++){
+        document.querySelector('#item-list').removeChild(newElement);
+    }
+    
     nextVote++; // Äänestyksien lista menee pykälän eteenpäin
     candidates = []; //Lista tyhjäksi
 }
