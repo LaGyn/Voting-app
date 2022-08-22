@@ -102,42 +102,49 @@ function addCandidate(){
     document.querySelector('#candidate input[type="text"]').focus();
     //console.log(candidates);
 }
-
+    let vote;
+    let VoteName;
 function addVote(){
     candidateList.push(candidates);
     candidates = candidateList[nextVote]; // Annetaan äänestyksien listalle juokseva numero
     
-    let VoteName = document.querySelector('#vote-name input[type="text"]').value; //Äänestyksen nimi otetaan talteen
-    let vote = new Vote(VoteName, candidates); // Luodaan äänestys olio jolla nimi ja äänestettävät asiat
+    VoteName = document.querySelector('#vote-name input[type="text"]').value; //Äänestyksen nimi otetaan talteen
+    vote = new Vote(VoteName, candidates); // Luodaan äänestys olio jolla nimi ja äänestettävät asiat
     votes.push(vote); // Äänestyslistaan lisätään äänestys
     //console.log(votes);
     let newSelectItem = vote.VoteName;
     //console.log(newSelectItem);
     let newElem = document.createElement('a');
     let newElem2 = document.createElement('br');
-    let newElem3 = document.createElement('button');
+    //let newElem3 = document.createElement('button');
     let newtext = document.createTextNode(newSelectItem);
-    let newText2 = document.createTextNode('Delete');
+    //let newText2 = document.createTextNode('Delete');
     newElem.appendChild(newtext); // uudelle elementille annetaan tekstiä
     newElem.className = 'vote-item'; // elementille annetaan class nimi
     newElem.setAttribute("data-bs-toggle", "modal");
     newElem.setAttribute("class", "vote-item");
-    newElem3.appendChild(newText2); // napille annetaan teksti
-    newElem3.className = 'deleteBtn'; // napille annetaan class nimi
-    newElem.href = "#voteDetails";
+    //newElem3.appendChild(newText2); // napille annetaan teksti
+    //newElem3.className = 'deleteBtn'; // napille annetaan class nimi
+    newElem.href = "#voteDetails"; // linkki vie modaaliin
     document.querySelector('#vote-name input[type="text"]').value = "";
     document.querySelector('#printArea').appendChild(newElem);
-    document.querySelector('#printArea').appendChild(newElem3);
+    //document.querySelector('#printArea').appendChild(newElem3);
     document.querySelector('#printArea').appendChild(newElem2);
     //let deleteBtn = document.getElementsByClassName('deleteBtn');
    // deleteBtn.style.backgroundColor = "red";
-
+    newElem.addEventListener('click', createVoteModal);
     let emptyList = document.getElementById('item-list');
     emptyList.innerHTML = "";
     
     nextVote++; // Äänestyksien lista menee pykälän eteenpäin
     candidates = []; //Lista tyhjäksi
 }
+
+function createVoteModal(){
+    let header = VoteName;
+    document.getElementById('voteHeader').innerText = header;
+}
+
 
 /*function deleteItem(){
     deleteBtn = document.getElementsByClassName('deleteBtn');
