@@ -89,10 +89,9 @@ function logIn(){
     }
 }
 
-    let newElement;
 function addCandidate(){
     let newListItem = document.querySelector('#candidate input[type="text"]').value;
-    newElement = document.createElement('li');
+    let newElement = document.createElement('li');
     let newText = document.createTextNode(newListItem); // Luodaan elementille tekstisisältö
     newElement.appendChild(newText); // Lisätään uudelle elementille teksti
     newElement.className = 'list-item'; // Annetaan uudelle elementille luokkanimi
@@ -119,11 +118,13 @@ function addVote(){
     let newElem3 = document.createElement('button');
     let newtext = document.createTextNode(newSelectItem);
     let newText2 = document.createTextNode('Delete');
-    newElem.appendChild(newtext);
-    newElem.className = 'vote-item';
-    newElem3.appendChild(newText2);
-    newElem3.className = 'deleteBtn';
-    newElem.href ='#';
+    newElem.appendChild(newtext); // uudelle elementille annetaan tekstiä
+    newElem.className = 'vote-item'; // elementille annetaan class nimi
+    newElem.setAttribute("data-bs-toggle", "modal");
+    newElem.setAttribute("class", "vote-item");
+    newElem3.appendChild(newText2); // napille annetaan teksti
+    newElem3.className = 'deleteBtn'; // napille annetaan class nimi
+    newElem.href = "#voteDetails";
     document.querySelector('#vote-name input[type="text"]').value = "";
     document.querySelector('#printArea').appendChild(newElem);
     document.querySelector('#printArea').appendChild(newElem3);
@@ -133,7 +134,6 @@ function addVote(){
 
     let emptyList = document.getElementById('item-list');
     emptyList.innerHTML = "";
-    
     
     nextVote++; // Äänestyksien lista menee pykälän eteenpäin
     candidates = []; //Lista tyhjäksi
