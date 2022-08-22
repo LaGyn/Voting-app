@@ -88,6 +88,7 @@ function logIn(){
         }
     }
 }
+
     let newElement;
 function addCandidate(){
     let newListItem = document.querySelector('#candidate input[type="text"]').value;
@@ -112,22 +113,34 @@ function addVote(){
     votes.push(vote); // Äänestyslistaan lisätään äänestys
     //console.log(votes);
     let newSelectItem = vote.VoteName;
-    console.log(newSelectItem);
+    //console.log(newSelectItem);
     let newElem = document.createElement('a');
     let newElem2 = document.createElement('br');
+    let newElem3 = document.createElement('button');
     let newtext = document.createTextNode(newSelectItem);
+    let newText2 = document.createTextNode('Delete');
     newElem.appendChild(newtext);
     newElem.className = 'vote-item';
+    newElem3.appendChild(newText2);
+    newElem3.className = 'deleteBtn';
     newElem.href ='#';
     document.querySelector('#vote-name input[type="text"]').value = "";
     document.querySelector('#printArea').appendChild(newElem);
+    document.querySelector('#printArea').appendChild(newElem3);
     document.querySelector('#printArea').appendChild(newElem2);
+    //let deleteBtn = document.getElementsByClassName('deleteBtn');
+   // deleteBtn.style.backgroundColor = "red";
 
-    for (let i = 1; i = candidates.length; i++){
-        document.querySelector('#item-list').removeChild(newElement);
-    }
+    let emptyList = document.getElementById('item-list');
+    emptyList.innerHTML = "";
+    
     
     nextVote++; // Äänestyksien lista menee pykälän eteenpäin
     candidates = []; //Lista tyhjäksi
 }
+
+/*function deleteItem(){
+    deleteBtn = document.getElementsByClassName('deleteBtn');
+    
+}*/
 
