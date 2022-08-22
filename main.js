@@ -28,13 +28,9 @@ function Vote(VoteName, candidates){
     this.candidates = candidates;
 }
 
-//let submitBtn = document.forms['signupform'];
-//let submit = document.forms['loginform'];
 let addCandBtn = document.getElementById('btn-addCand');
 let addVoteBtn = document.getElementById('btn-addVote');
 
-//submitBtn.addEventListener('submit', addUser);
-//submit.addEventListener('submit', logIn);
 addCandBtn.addEventListener('click', addCandidate);
 addVoteBtn.addEventListener('click', addVote);
 
@@ -102,6 +98,7 @@ function addCandidate(){
     document.querySelector('#candidate input[type="text"]').focus();
     //console.log(candidates);
 }
+
     let vote;
     let VoteName;
 function addVote(){
@@ -116,25 +113,20 @@ function addVote(){
     //console.log(newSelectItem);
     let newElem = document.createElement('a');
     let newElem2 = document.createElement('br');
-    //let newElem3 = document.createElement('button');
     let newtext = document.createTextNode(newSelectItem);
-    //let newText2 = document.createTextNode('Delete');
+    
     newElem.appendChild(newtext); // uudelle elementille annetaan tekstiä
     newElem.className = 'vote-item'; // elementille annetaan class nimi
     newElem.setAttribute("data-bs-toggle", "modal");
-    newElem.setAttribute("class", "vote-item");
-    //newElem3.appendChild(newText2); // napille annetaan teksti
-    //newElem3.className = 'deleteBtn'; // napille annetaan class nimi
+    
     newElem.href = "#voteDetails"; // linkki vie modaaliin
     document.querySelector('#vote-name input[type="text"]').value = "";
-    document.querySelector('#printArea').appendChild(newElem);
-    //document.querySelector('#printArea').appendChild(newElem3);
-    document.querySelector('#printArea').appendChild(newElem2);
-    //let deleteBtn = document.getElementsByClassName('deleteBtn');
-   // deleteBtn.style.backgroundColor = "red";
-    newElem.addEventListener('click', createVoteModal);
+    document.querySelector('#printArea').appendChild(newElem); // Tulostetaan print arealle uusi elementti
+    document.querySelector('#printArea').appendChild(newElem2); // Tulostetaan rivinvaihto
+    
+    newElem.addEventListener('click', createVoteModal); // linkki-elementille function kutsu
     let emptyList = document.getElementById('item-list');
-    emptyList.innerHTML = "";
+    emptyList.innerHTML = ""; // Tyhjennetään tulostusalue listasta
     
     nextVote++; // Äänestyksien lista menee pykälän eteenpäin
     candidates = []; //Lista tyhjäksi
@@ -142,12 +134,26 @@ function addVote(){
 
 function createVoteModal(){
     let header = VoteName;
-    document.getElementById('voteHeader').innerText = header;
+    document.getElementById('voteHeader').innerText = header; // Määritetään modaalin otsikko
+    
+    for (let i = 0; i < vote.candidates.length; i++){
+        let cand = vote.candidates[i];
+        let candElement = document.createElement('h4');
+        let newElem3 = document.createElement('button');
+        let newText2 = document.createTextNode(cand)
+        let newText3 = document.createTextNode('Vote');
+        candElement.appendChild(newText2);
+        newElem3.appendChild(newText3); // napille annetaan teksti
+        candElement.className = 'candidate';
+        newElem3.className = 'voteBtn'; // napille annetaan class nimi
+        document.querySelector('#voteCandidates').appendChild(candElement);
+        document.querySelector('#voteCandidates').appendChild(newElem3);
+        
+    }
 }
 
-
-/*function deleteItem(){
+function deleteItem(){
     deleteBtn = document.getElementsByClassName('deleteBtn');
     
-}*/
+}
 
