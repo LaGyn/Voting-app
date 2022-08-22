@@ -43,6 +43,7 @@
                         <div class="pt-3">
                             <h4 class="fw-light">Candidates:</h4>
                             <ul id="item-list">
+
                             </ul>
                         </div>
                         <div class="form-group pt-3">
@@ -133,6 +134,31 @@
             </div>
         </div>
         
+    </div>
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="voteDetails">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="voteHeader"></h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="voteCandidates" class="">
+                        
+                    </div>
+                    <div id="results" class="">
+                       
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="deleteItem();">Delete vote</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="main.js"></script>
