@@ -9,10 +9,14 @@ let users = [admin];
 const votes = [];
 let candidates = []; //äänestys kohteet
 let data;
-let nextVote;
 let index = 0;
+let btnIndex = 0;
 let link;
 let totalVotes;
+let newText2;
+let newVotes;
+let nro;
+let newElem;
 
 //Constructors:
 function User(firstname, lastname, address, zipcode, email, username, password){
@@ -100,7 +104,7 @@ function addCandidate(){
     newElement.appendChild(newText); // Lisätään uudelle elementille teksti
     newElement.className = 'list-item'; // Annetaan uudelle elementille luokkanimi
     document.querySelector('#item-list').appendChild(newElement);
-    let newVotes = 0; // Äänien määrä
+    newVotes = 0; // Äänien määrä
     let candidate = new Candidate(newVoteItem, newVotes);
     candidates.push(candidate); // Lisätään candidate candidates-arraylle
 
@@ -119,12 +123,9 @@ function addVote(){
     localStorage.setItem('votes', JSON.stringify(votes));
     data = JSON.parse(localStorage.getItem('votes'));
 
-    //console.log(data[nextVote]);
-    //console.log(data[0].candidates[1]);
-
     let newSelectItem = VoteName;
     //console.log(newSelectItem);
-    let newElem = document.createElement('a');
+    newElem = document.createElement('a');
     let newElem2 = document.createElement('br');
     let newtext = document.createTextNode(newSelectItem);
     
@@ -159,26 +160,32 @@ function createVoteModal(event){
         let candElement = document.createElement('h4');
         let newElem3 = document.createElement('button');
        // let newElem4 = document.createElement('h5');
-        let newText2 = document.createTextNode(cand + '  total votes: ' + totalVotes);
+        newText2 = document.createTextNode(cand + '  total votes: ' + totalVotes);
         let newText3 = document.createTextNode('Vote');
         candElement.appendChild(newText2);
         newElem3.appendChild(newText3); // napille annetaan teksti
        // newElem4.appendChild(newText2 + 'votes: ');
         candElement.className = 'candidate';
+        candElement.id = btnIndex; // Annetaan elementille juokseva id nro, tämä on sama kuin kohteen napilla
         newElem3.className = 'voteBtn'; // napille annetaan class nimi
         newElem3.className = 'btn btn-primary';
-        newElem3.id = link;
+        newElem3.id = btnIndex; // Annetaan napille juokseva id nro
         document.querySelector('#voteCandidates').appendChild(candElement);
         document.querySelector('#voteCandidates').appendChild(newElem3);
-
+        btnIndex++; // Napin indeksi numero kasvaa yhdellä
         newElem3.addEventListener('click', vote);
     })
 }
 
 function vote(event){
-    console.log(event.target.id)
-    link = event.target.id;
-    totalVotes = totalVotes + 1;
+    link = newElem.id;
+    console.log(event.target.id);
+    nro = event.target.id;
+    //console.log(votes[link].candidates[nro].newVotes);
+    votes[link].candidates[nro].newVotes = votes[link].candidates[nro].newVotes + 1;
+    localStorage.setItem('newVotes', JSON.stringify(votes));
+    data = JSON.parse(localStorage.getItem('votes'));
+    console.log(votes[link].candidates[nro].newVotes);
 }
 
 function deleteItem(){
