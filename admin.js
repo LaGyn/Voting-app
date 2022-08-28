@@ -1,4 +1,4 @@
-
+//window.addEventListener('load', createListOfVotes);
 let username = "";
 let password = "";
 let admin = {
@@ -14,6 +14,7 @@ let link;
 let newVotes;
 let newElem;
 let totalVotes;
+let modal = document.getElementById('voteDetails');
 
 //Constructors:
 function User(firstname, lastname, address, zipcode, email, username, password){
@@ -81,7 +82,7 @@ function logIn(){
     let appliedPassword = document.getElementById("Password").value;
     let inList = false;
     if (name == appliedName && word == appliedPassword){
-        window.open('/home.html');
+        window.open('/vote.html');
     }
     for (let i = 0; i < users.length; i++){
         if (appliedName == 'yllapito' && appliedPassword == 'lintu'){
@@ -90,7 +91,7 @@ function logIn(){
         }
         else if(users[i].username == appliedName && users[i].password == appliedPassword){
             inList = true;
-            window.open('/home.html');
+            window.open('/vote.html');
         }
     }
 }
@@ -127,21 +128,16 @@ function addVote(){
     newElem = document.createElement('a');
     let newElem2 = document.createElement('br');
     let newtext = document.createTextNode(newSelectItem);
-    let newHomeElem = document.createElement('h3');
-    let newtext4 = document.createTextNode(newSelectItem);
     newElem.appendChild(newtext); // uudelle elementille annetaan tekstiä
     newElem.className = 'vote-item'; // elementille annetaan class nimi
     newElem.setAttribute("data-bs-toggle", "modal");
     newElem.id = index;
-    newHomeElem.appendChild(newtext4);
-    newHomeElem.className = 'home-elem';
-    
+    newElem.setAttribute("data-vote", index)
     
     newElem.href = "#voteDetails"; // linkki vie modaaliin
     document.querySelector('#vote-name input[type="text"]').value = "";
     document.querySelector('#printArea').appendChild(newElem); // Tulostetaan print arealle uusi elementti
     document.querySelector('#printArea').appendChild(newElem2); // Tulostetaan rivinvaihto
-    document.querySelector('#printArea3').appendChild(newHomeElem); // Tulostetaan home.html sivun printarea3 uusi elementti
     
     newElem.addEventListener('click', createVoteModal); // linkki-elementille function kutsu
     
@@ -150,6 +146,7 @@ function addVote(){
     
     index++; // Id : n indeksi numero kasvaa => jokainen äänestys saa eri numeron, jonka avulla äänestykselle kohdennetaan oikeat äänestyskohteet modaaliin tulostaessa.
     candidates = []; //Lista tyhjäksi, muuten äänestyskohteet menevät kaikki samalle äänestykselle
+    
 }
 
 function createVoteModal(event){
@@ -168,7 +165,7 @@ function createVoteModal(event){
         let newText3 = document.createTextNode('Vote');
         candElement.appendChild(newText2);
         newElem3.appendChild(newText3); // napille annetaan teksti
-       // newElem4.appendChild(newText2 + 'votes: ');
+   
         candElement.className = 'candidate';
         candElement.id = btnIndex; // Annetaan elementille juokseva id nro, tämä on sama kuin kohteen napilla
         newElem3.className = 'voteBtn'; // napille annetaan class nimi
@@ -194,7 +191,6 @@ function createVoteModal(event){
 }
 
 function vote(event){
-
     link = newElem.id;
     let nro = event.target.id;
     votes[link].candidates[nro].newVotes = votes[link].candidates[nro].newVotes + 1;
@@ -206,13 +202,34 @@ function vote(event){
     result.appendChild(resultText2);
 
     document.querySelector('#results').appendChild(result);  
-    
 }
 
-function deleteItem(event){
-    link = newElem.id;
-    let delItem = votes[link];
-    
-    console.log(delItem);
+function deleteItem(){
+    delete votes[link];
+    //localStorage.removeItem('votes', [{votes[link]}]);
+    //modal.style.display = "none";
+    let poistettava = document.getElementById(link);
+    let elementti = document.querySelector('#printArea');
+    elementti.removeChild(poistettava);
+    console.log(votes);
 }
-  
+/* 
+function createListOfVotes(){
+    data = JSON.parse(localStorage.getItem('votes'));
+    console.log(data)
+    let VoteName;
+    for (let i = 0; i < data.length; i++){
+        VoteName = data[i].VoteName; // KOrjaa tämä!!!
+        let votename = VoteName;
+        let voteElement = document.createElement('a');
+        let voteTitle = document.createTextNode(votename);
+        voteElement.appendChild(voteTitle);
+        voteElement.className = 'vote-item';
+        voteElement.id = index;
+        voteElement.href = "#"; // Tähän linkkiosoite
+        let linebreak = document.createElement('br');
+        document.querySelector('#printArea').appendChild(voteElement);
+        document.querySelector('#printArea').appendChild(linebreak);
+        index++;
+    }
+}*/
