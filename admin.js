@@ -1,4 +1,4 @@
-//window.addEventListener('load', createListOfVotes);
+window.addEventListener('load', createListOfVotes);
 let username = "";
 let password = "";
 let admin = {
@@ -8,12 +8,10 @@ let admin = {
 let users = [admin];
 const votes = [];
 let candidates = []; //äänestys kohteet
-let data;
-let index = 0;
+let data = JSON.parse(localStorage.getItem('votes'));
+//let index = 0;
 let link;
 let newVotes;
-let newElem;
-let totalVotes;
 let modal = document.getElementById('voteDetails');
 
 //Constructors:
@@ -45,6 +43,8 @@ addCandBtn.addEventListener('click', addCandidate);
 addVoteBtn.addEventListener('click', addVote);
 deleteBtn.addEventListener('click', deleteItem);
 
+// Rekisteröityminen:
+
 function addUser(){
     let firstname = document.getElementById("firstname").value;
     let lastname = document.getElementById("lastname").value;
@@ -75,6 +75,8 @@ function addUser(){
     document.getElementById("password").value = "";
 }
 
+// Sisäänkirjautuminen:
+
 function logIn(){
     const name = localStorage.getItem('username');
     const word = localStorage.getItem('password');
@@ -96,6 +98,8 @@ function logIn(){
     }
 }
     
+// Annetaan äänestykselle äänestyskohteet ja tulostetaan ne html-sivulle, jotta tekijä näkee mitkä kohteet on jo lisätty:
+
 function addCandidate(){
     // Lisätään html-tiedostoon lista elemettejä:
     let newVoteItem = document.querySelector('#candidate input[type="text"]').value;
@@ -104,40 +108,45 @@ function addCandidate(){
     newElement.appendChild(newText); // Lisätään uudelle elementille teksti
     newElement.className = 'list-item'; // Annetaan uudelle elementille luokkanimi
     document.querySelector('#item-list').appendChild(newElement);
-    newVotes = 0; // Äänien määrä
-    let candidate = new Candidate(newVoteItem, newVotes);
+    newVotes = 0; // Alustetaan äänien määrä nollaksi
+    let candidate = new Candidate(newVoteItem, newVotes); // Luodaan uusi candidate-olio jolla nimi ja äänimäärä
     candidates.push(candidate); // Lisätään candidate candidates-arraylle
 
-    document.querySelector('#candidate input[type="text"]').value = "";
-    document.querySelector('#candidate input[type="text"]').focus();
-    //console.log(candidates);
-    
+    document.querySelector('#candidate input[type="text"]').value = ""; // Tyhjennetään input-kenttä
+    document.querySelector('#candidate input[type="text"]').focus(); // Kursori valmiiksi inputkenttään
 }
+
+// Luodaan äänestys ja viedään se tietokantaan (localstorage):
 
 function addVote(){
     
     let VoteName = document.querySelector('#vote-name input[type="text"]').value; //Äänestyksen nimi otetaan talteen
-    let vote = new Vote(VoteName, candidates); // Luodaan äänestys olio jolla nimi ja äänestettävät asiat
-    votes.push(vote); // Äänestyslistaan lisätään äänestys
-    //console.log(votes);
+    let vote = new Vote(VoteName, candidates); // Luodaan äänestys olio, jolla nimi ja äänestettävät asiat
+    votes.push(vote); // Lisätään äänestys äänestysten arraylle
+
     localStorage.setItem('votes', JSON.stringify(votes));
     data = JSON.parse(localStorage.getItem('votes'));
 
+    document.querySelector('#vote-name input[type="text"]').value = ""; // Tyhjennetään input-kenttä
+    let emptyList = document.getElementById('item-list');
+    emptyList.innerHTML = ""; // Tyhjennetään tulostusalue listasta
+    candidates = []; //Lista tyhjäksi, muuten äänestyskohteet menevät kaikki samalle äänestykselle
+/*
     let newSelectItem = VoteName;
     //console.log(newSelectItem);
-    newElem = document.createElement('a');
-    let newElem2 = document.createElement('br');
-    let newtext = document.createTextNode(newSelectItem);
-    newElem.appendChild(newtext); // uudelle elementille annetaan tekstiä
-    newElem.className = 'vote-item'; // elementille annetaan class nimi
-    newElem.setAttribute("data-bs-toggle", "modal");
-    newElem.id = index;
-    newElem.setAttribute("data-vote", index)
+   -- newElem = document.createElement('a');
+   -- let newElem2 = document.createElement('br');
+   -- let newtext = document.createTextNode(newSelectItem);
+   -- newElem.appendChild(newtext); // uudelle elementille annetaan tekstiä
+   -- newElem.className = 'vote-item'; // elementille annetaan class nimi
+   -- newElem.setAttribute("data-bs-toggle", "modal");
+   -- newElem.id = index;
+   -- newElem.setAttribute("data-vote", index)
     
-    newElem.href = "#voteDetails"; // linkki vie modaaliin
-    document.querySelector('#vote-name input[type="text"]').value = "";
-    document.querySelector('#printArea').appendChild(newElem); // Tulostetaan print arealle uusi elementti
-    document.querySelector('#printArea').appendChild(newElem2); // Tulostetaan rivinvaihto
+   -- newElem.href = "#voteDetails"; // linkki vie modaaliin
+   -- document.querySelector('#vote-name input[type="text"]').value = "";
+   -- document.querySelector('#printArea').appendChild(newElem); // Tulostetaan print arealle uusi elementti
+   -- document.querySelector('#printArea').appendChild(newElem2); // Tulostetaan rivinvaihto
     
     newElem.addEventListener('click', createVoteModal); // linkki-elementille function kutsu
     
@@ -146,38 +155,60 @@ function addVote(){
     
     index++; // Id : n indeksi numero kasvaa => jokainen äänestys saa eri numeron, jonka avulla äänestykselle kohdennetaan oikeat äänestyskohteet modaaliin tulostaessa.
     candidates = []; //Lista tyhjäksi, muuten äänestyskohteet menevät kaikki samalle äänestykselle
-    
+    */
+    createListOfVotes();
+}
+
+// Luodaan lista html-sivulle äänestyksistä. Otsikot linkkeinä modaaliin:
+
+function createListOfVotes(event){
+    let index = 0;
+    let emptyList = document.getElementById('printArea'); // Tyhjennetään edellinen lista jotta kyseessä on aina päivitetty versio
+    emptyList.innerHTML = "";
+    data = JSON.parse(localStorage.getItem('votes')); // Tuodaan sen hetkisestä tietokannasta tiedot käytettäväksi
+    //console.log(data)
+    for (let i = 0; i < data.length; i++){
+        let VoteName = data[i].VoteName; 
+        let votename = VoteName;
+        let voteElement = document.createElement('a');
+        let voteTitle = document.createTextNode(votename);
+        voteElement.appendChild(voteTitle);
+        voteElement.className = 'vote-item';
+        voteElement.setAttribute('data-bs-toggle', 'modal');
+        voteElement.setAttribute('data-vote', index);
+        voteElement.id = index;
+        voteElement.href = "#voteDetails"; // Linkki avaa modaalin
+        let linebreak = document.createElement('br');
+        voteElement.addEventListener('click', createVoteModal);
+        document.querySelector('#printArea').appendChild(voteElement);
+        document.querySelector('#printArea').appendChild(linebreak);
+        voteElement.addEventListener('click', createVoteModal);
+        index++;
+    }
 }
 
 function createVoteModal(event){
     let btnIndex = 0;
     let emptyList = document.getElementById('voteCandidates');
     emptyList.innerHTML = ""; // Tyhjennetään tulostusalue listasta
+    let emptyList2 = document.getElementById('results');
+    emptyList2.innerHTML = ""; // Tyhjennetään tulostusalue listasta
     //console.log(event.target.id)
+    data = JSON.parse(localStorage.getItem('votes'));
     link = event.target.id; // Otetaan talteen äänestyksen id numero.
-    let header = votes[link].VoteName; // Id numeroa käytetään apuna kohdennettaessa äänestyksen nimi ja äänestyskohteet
+    let header = data[link].VoteName; // Id numeroa käytetään apuna kohdennettaessa äänestyksen nimi ja äänestyskohteet
     document.getElementById('voteHeader').innerText = header; // Määritetään modaalin otsikko
-    votes[link].candidates.forEach(candidates => {
+    data[link].candidates.forEach(candidates => {
         let cand = candidates.newVoteItem;
         let candElement = document.createElement('h4');
-        let newElem3 = document.createElement('button');
         let newText2 = document.createTextNode(cand);
-        let newText3 = document.createTextNode('Vote');
         candElement.appendChild(newText2);
-        newElem3.appendChild(newText3); // napille annetaan teksti
-   
         candElement.className = 'candidate';
-        candElement.id = btnIndex; // Annetaan elementille juokseva id nro, tämä on sama kuin kohteen napilla
-        newElem3.className = 'voteBtn'; // napille annetaan class nimi
-        newElem3.className = 'btn btn-primary';
-        newElem3.id = btnIndex; // Annetaan napille juokseva id nro
+        candElement.id = btnIndex; // Annetaan elementille juokseva id nro
         document.querySelector('#voteCandidates').appendChild(candElement);
-        document.querySelector('#voteCandidates').appendChild(newElem3);
-        
-        newElem3.addEventListener('click', vote);
 
-        let name = votes[link].candidates[btnIndex].newVoteItem;
-        totalVotes = votes[link].candidates[btnIndex].newVotes;
+        let name = data[link].candidates[btnIndex].newVoteItem;
+        let totalVotes = data[link].candidates[btnIndex].newVotes;
         let newDiv = document.createElement('div');
         newDiv.className = 'd-sm-flex justify-content-between';
         
@@ -190,46 +221,9 @@ function createVoteModal(event){
     })
 }
 
-function vote(event){
-    link = newElem.id;
-    let nro = event.target.id;
-    votes[link].candidates[nro].newVotes = votes[link].candidates[nro].newVotes + 1;
-    totalVotes = votes[link].candidates[nro].newVotes;
-    localStorage.setItem('newVotes', JSON.stringify(votes));
-    
-    let result = document.createElement('h4');
-    let resultText2 = document.createTextNode(totalVotes);
-    result.appendChild(resultText2);
-
-    document.querySelector('#results').appendChild(result);  
-}
-
 function deleteItem(){
-    delete votes[link];
-    //localStorage.removeItem('votes', [{votes[link]}]);
-    //modal.style.display = "none";
-    let poistettava = document.getElementById(link);
-    let elementti = document.querySelector('#printArea');
-    elementti.removeChild(poistettava);
-    console.log(votes);
-}
-/* 
-function createListOfVotes(){
     data = JSON.parse(localStorage.getItem('votes'));
-    console.log(data)
-    let VoteName;
-    for (let i = 0; i < data.length; i++){
-        VoteName = data[i].VoteName; // KOrjaa tämä!!!
-        let votename = VoteName;
-        let voteElement = document.createElement('a');
-        let voteTitle = document.createTextNode(votename);
-        voteElement.appendChild(voteTitle);
-        voteElement.className = 'vote-item';
-        voteElement.id = index;
-        voteElement.href = "#"; // Tähän linkkiosoite
-        let linebreak = document.createElement('br');
-        document.querySelector('#printArea').appendChild(voteElement);
-        document.querySelector('#printArea').appendChild(linebreak);
-        index++;
-    }
-}*/
+    votes.splice(link, 1);
+    localStorage.setItem('votes', JSON.stringify(votes))
+    createListOfVotes();
+}
