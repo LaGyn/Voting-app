@@ -5,11 +5,11 @@ let admin = {
     username: "yllapito",
     password: "lintu", 
 };
-let users = [admin];
+const users = [admin];
 const votes = [];
 let candidates = []; //äänestys kohteet
 let data;
-//let index = 0;
+let userData;
 let link;
 let newVotes;
 let modal = document.getElementById('voteDetails');
@@ -54,17 +54,11 @@ function addUser(){
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
 
-    let user;
-    user = new User(firstname, lastname, address, zipcode, email, username, password);
+    let user = new User(firstname, lastname, address, zipcode, email, username, password);
     users.push(user);
 
-    localStorage.setItem('firstname', firstname);
-    localStorage.setItem('lastname', lastname);
-    localStorage.setItem('address', address);
-    localStorage.setItem('zipcode', zipcode);
-    localStorage.setItem('email', email);
-    localStorage.setItem('username', username);
-    localStorage.setItem('password', password);
+    localStorage.setItem('users', JSON.stringify(users));
+    userData = JSON.parse(localStorage.getItem('users'));
 
     document.getElementById("firstname").value = "";
     document.getElementById("lastname").value = "";
@@ -78,22 +72,18 @@ function addUser(){
 // Sisäänkirjautuminen:
 
 function logIn(){
-    const name = localStorage.getItem('username');
-    const word = localStorage.getItem('password');
     let appliedName = document.getElementById("Username").value;
     let appliedPassword = document.getElementById("Password").value;
+    userData = JSON.parse(localStorage.getItem('users'));
     let inList = false;
-    if (name == appliedName && word == appliedPassword){
-        window.open('/vote.html');
-    }
-    for (let i = 0; i < users.length; i++){
+    for (let i = 0; i < userData.length; i++){
+        if (userData[i].username == appliedName && userData[i].password == appliedPassword){
+            inList = true;
+            window.open('/vote.html');
+        }
         if (appliedName == 'yllapito' && appliedPassword == 'lintu'){
             inList = true;
             window.open('/admin.html');
-        }
-        else if(users[i].username == appliedName && users[i].password == appliedPassword){
-            inList = true;
-            window.open('/vote.html');
         }
     }
 }
