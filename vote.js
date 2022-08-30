@@ -1,7 +1,14 @@
 window.addEventListener('load', createListOfVotes); // Kun sivu latautuu suoritetaan seuraava funktio 
 
-let data = JSON.parse(localStorage.getItem('votes'));
+let data;
+let votes;
 let candidates;
+let voteElement;
+//let link;
+let item;
+let votearea = document.getElementById('votearea');
+
+// Luodaan lista äänestyksistä html-sivulle: 
 
 function createListOfVotes(){
     let index = 0;
@@ -12,19 +19,20 @@ function createListOfVotes(){
     for (let i = 0; i < data.length; i++){
         let VoteName = data[i].VoteName;
         let votename = VoteName;
-        let voteElement = document.createElement('a');
+        voteElement = document.createElement('a');
         let voteTitle = document.createTextNode(votename);
         voteElement.appendChild(voteTitle);
         voteElement.className = 'vote-item';
         voteElement.id = index;
-        voteElement.href = "#"; // Tähän linkkiosoite
+        voteElement.setAttribute('data-vote', index);
+        voteElement.href = "#printArea4"; // Tähän linkkiosoite
         let linebreak = document.createElement('br');
         document.querySelector('#printArea3').appendChild(voteElement);
         document.querySelector('#printArea3').appendChild(linebreak);
-        index++;
         voteElement.addEventListener('click', selectVote);
+        index++;
     }
-   /* data.forEach(vote => {
+    /*data.votes.forEach(votes => {
         let votename = VoteName;
         let voteElement = document.createElement('a');
         let voteTitle = document.createTextNode(votename);
@@ -34,87 +42,126 @@ function createListOfVotes(){
         let linebreak = document.createElement('br');
         document.querySelector('#printArea3').appendChild(voteElement);
         document.querySelector('#printArea3').appendChild(linebreak);
+        index++;
     })*/
 }
 
+// Tuodaan tiedot äänestyksestä html-sivulle:
+
 function selectVote(event){
-    let item = event.target.id;
+    //votearea.style.display = "block";
+    item = event.target.id;
+    console.log(item);
     let btnIndex = 0;
-    let name = votes[item].VoteName;
-    votes[item].candidates.forEach(candidates => {
+    let emptyList = document.getElementById('printArea4');
+    emptyList.innerHTML = ""; // Tyhjennetään tulostusalue listasta
+    data = JSON.parse(localStorage.getItem('votes'));
+    let header = data[item].VoteName;
+    document.getElementById('voteHeader').innerText = header;
+    data[item].candidates.forEach(candidates => {
         let candidate = candidates.newVoteItem;
         let candElement = document.createElement('h3');
         let newElem3 = document.createElement('button');
         let newText2 = document.createTextNode(candidate);
         let newText3 = document.createTextNode('Vote');
+        let horizontal = document.createElement('hr');
         candElement.appendChild(newText2);
         newElem3.appendChild(newText3); // napille annetaan teksti
 
         candElement.className = 'candidate';
         candElement.id = btnIndex; // Annetaan elementille juokseva id nro, tämä on sama kuin kohteen napilla
         newElem3.className = 'voteBtn'; // napille annetaan class nimi
-        newElem3.className = 'btn btn-primary';
+        
         newElem3.id = btnIndex; // Annetaan napille juokseva id nro
+        newElem3.className = 'btn btn-primary';
+        document.querySelector('#printArea4').appendChild(horizontal);
         document.querySelector('#printArea4').appendChild(candElement);
         document.querySelector('#printArea4').appendChild(newElem3);
-      
-        newElem3.addEventListener('click', vote);
-        btnIndex++;
-    })
-}
-
-function createVoteModal(event){
-    let btnIndex = 0;
-    let emptyList = document.getElementById('voteCandidates');
-    emptyList.innerHTML = ""; // Tyhjennetään tulostusalue listasta
-    //console.log(event.target.id)
-    data = JSON.parse(localStorage.getItem('votes'));
-    link = event.target.id; // Otetaan talteen äänestyksen id numero.
-    let header = data[link].VoteName; // Id numeroa käytetään apuna kohdennettaessa äänestyksen nimi ja äänestyskohteet
-    document.getElementById('voteHeader').innerText = header; // Määritetään modaalin otsikko
-    data[link].candidates.forEach(candidates => {
-        let cand = candidates.newVoteItem;
-        let candElement = document.createElement('h4');
-        let newElem3 = document.createElement('button');
-        let newText2 = document.createTextNode(cand);
-        let newText3 = document.createTextNode('Vote');
-        candElement.appendChild(newText2);
-        newElem3.appendChild(newText3); // napille annetaan teksti
-   
-        candElement.className = 'candidate';
-        candElement.id = btnIndex; // Annetaan elementille juokseva id nro, tämä on sama kuin kohteen napilla
-        newElem3.className = 'voteBtn'; // napille annetaan class nimi
-        newElem3.className = 'btn btn-primary';
-        newElem3.id = btnIndex; // Annetaan napille juokseva id nro
-        document.querySelector('#voteCandidates').appendChild(candElement);
-        document.querySelector('#voteCandidates').appendChild(newElem3);
         
-        newElem3.addEventListener('click', vote);
-
-        let name = data[link].candidates[btnIndex].newVoteItem;
-        totalVotes = data[link].candidates[btnIndex].newVotes;
-        let newDiv = document.createElement('div');
-        newDiv.className = 'd-sm-flex justify-content-between';
-        
+        let name = data[item].candidates[btnIndex].newVoteItem;
+        let totalVotes = data[item].candidates[btnIndex].newVotes;
         let nameElement = document.createElement('h4');
         let resultText = document.createTextNode(name + '  total votes: ' + totalVotes);
         nameElement.appendChild(resultText);
-        
-        document.querySelector('#results').appendChild(newDiv).appendChild(nameElement);
-        btnIndex++; // Napin indeksi numero kasvaa yhdellä
+        document.querySelector('#printArea4').appendChild(nameElement);
+        newElem3.addEventListener('click', vote);
+        btnIndex++;
     })
+    /*
+    let closeBtn = document.createElement('button');
+    let closeText = document.createTextNode('Close vote');
+    let horizontal2 = document.createElement('hr');
+    closeBtn.appendChild(closeText);
+    closeBtn.className = 'btn btn-primary';
+    closeBtn.addEventListener('click', closeArea);
+    document.querySelector('#printArea4').appendChild(horizontal2);
+    document.querySelector('#printArea4').appendChild(closeBtn);*/
 }
 
-function vote(event){
-    link = newElem.id;
-    let nro = event.target.id;
-    votes[link].candidates[nro].newVotes = votes[link].candidates[nro].newVotes + 1;
-    totalVotes = votes[link].candidates[nro].newVotes;
-    localStorage.setItem('newVotes', JSON.stringify(votes));
-    
-    let result = document.createElement('h4');
-    let resultText2 = document.createTextNode(totalVotes);
-    result.appendChild(resultText2);
+// Äänestetään:
 
-    document.querySelector('#results').appendChild(result);  
+function vote(event){
+    let nro = event.target.id;
+    let aanet = data[item].candidates[nro].newVotes = data[item].candidates[nro].newVotes + 1;
+    localStorage.setItem('votes', JSON.stringify(data)); // HUOM!!! stringify DATA! ei votes
+    //data = JSON.parse(localStorage.getItem('votes'));
+    console.log(nro);
+    console.log(aanet);
+    upDateVote(event); 
+}
+
+// Sulkee äänestyksen:
+/*
+function closeArea(){
+    votearea.style.display = "none";
+}*/
+
+function upDateVote(event){
+    //votearea.style.display = "block";
+    //item = event.target.id;
+    console.log(item);
+    let btnIndex = 0;
+    let emptyList = document.getElementById('printArea4');
+    emptyList.innerHTML = ""; // Tyhjennetään tulostusalue listasta
+    data = JSON.parse(localStorage.getItem('votes'));
+    let header = data[item].VoteName;
+    document.getElementById('voteHeader').innerText = header;
+    data[item].candidates.forEach(candidates => {
+        let candidate = candidates.newVoteItem;
+        let candElement = document.createElement('h3');
+        let newElem3 = document.createElement('button');
+        let newText2 = document.createTextNode(candidate);
+        let newText3 = document.createTextNode('Vote');
+        let horizontal = document.createElement('hr');
+        candElement.appendChild(newText2);
+        newElem3.appendChild(newText3); // napille annetaan teksti
+
+        candElement.className = 'candidate';
+        candElement.id = btnIndex; // Annetaan elementille juokseva id nro, tämä on sama kuin kohteen napilla
+        newElem3.className = 'voteBtn'; // napille annetaan class nimi
+        
+        newElem3.id = btnIndex; // Annetaan napille juokseva id nro
+        newElem3.className = 'btn btn-primary';
+        document.querySelector('#printArea4').appendChild(horizontal);
+        document.querySelector('#printArea4').appendChild(candElement);
+        document.querySelector('#printArea4').appendChild(newElem3);
+        
+        let name = data[item].candidates[btnIndex].newVoteItem;
+        let totalVotes = data[item].candidates[btnIndex].newVotes;
+        let nameElement = document.createElement('h4');
+        let resultText = document.createTextNode(name + '  total votes: ' + totalVotes);
+        nameElement.appendChild(resultText);
+        document.querySelector('#printArea4').appendChild(nameElement);
+        newElem3.addEventListener('click', vote);
+        btnIndex++;
+    })
+    /*
+    let closeBtn = document.createElement('button');
+    let closeText = document.createTextNode('Close vote');
+    let horizontal2 = document.createElement('hr');
+    closeBtn.appendChild(closeText);
+    closeBtn.className = 'btn btn-primary';
+    closeBtn.addEventListener('click', closeArea);
+    document.querySelector('#printArea4').appendChild(horizontal2);
+    document.querySelector('#printArea4').appendChild(closeBtn);*/
 }
