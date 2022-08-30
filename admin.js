@@ -60,7 +60,7 @@ function addUser(){
     localStorage.setItem('users', JSON.stringify(users));
     userData = JSON.parse(localStorage.getItem('users'));
 
-    document.getElementById("firstname").value = "";
+    document.getElementById("firstname").value = ""; // Input-kentät tyhjiksi
     document.getElementById("lastname").value = "";
     document.getElementById("address").value = "";
     document.getElementById("zipcode").value = "";
