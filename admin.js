@@ -3,7 +3,7 @@ window.addEventListener('load', createListOfUsers);
 let username = "";
 let password = "";
 
-const users = [];
+let users = [];
 const votes = [];
 let candidates = []; //äänestys kohteet
 let data;
@@ -82,14 +82,14 @@ function logIn(){
     let appliedPassword = document.getElementById("Password").value;
     userData = JSON.parse(localStorage.getItem('users'));
     let inList = false;
+    if (appliedName == 'yllapito' && appliedPassword == 'lintu'){
+        inList = true;
+        window.open('/admin.html');
+    }
     for (let i = 0; i < userData.length; i++){
         if (userData[i].username == appliedName && userData[i].password == appliedPassword){
             inList = true;
             window.open('/vote.html');
-        }
-        if (appliedName == 'admin' && appliedPassword == 'qwerty'){
-            inList = true;
-            window.open('/admin.html');
         }
     }
 }
