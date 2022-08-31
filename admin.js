@@ -3,14 +3,13 @@ window.addEventListener('load', createListOfUsers);
 let username = "";
 let password = "";
 
-let users = [];
+const users = [];
 const votes = [];
 let candidates = []; //äänestys kohteet
 let data;
 let userData;
 let link;
 let newVotes;
-let modal = document.getElementById('voteDetails');
 
 //Constructors:
 function User(firstname, lastname, address, zipcode, email, username, password){
@@ -58,7 +57,8 @@ function addUser(){
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
 
-    let user = new User(firstname, lastname, address, zipcode, email, username, password);
+    let user;
+    user = new User(firstname, lastname, address, zipcode, email, username, password);
     users.push(user);
 
     localStorage.setItem('users', JSON.stringify(users));
@@ -222,7 +222,6 @@ function createListOfUsers(){
         document.querySelector('#printArea2').appendChild(userElement);
         document.querySelector('#printArea2').appendChild(linebreak);
         userElement.addEventListener('click', createUserModal);
-        //userElement.addEventListener('click', printInfo);
         index++;
     }
     
@@ -231,21 +230,64 @@ function createListOfUsers(){
 // Tulostetaan käyttäjän tiedot modaaliin:
 
 function createUserModal(event){
-   // let print = "";
-   // let emptyList = document.getElementById('users');
-   // emptyList.innerHTML = ""; // Tyhjennetään tulostusalue listasta
-    
+    //let print = "";
     link = event.target.id; // Otetaan talteen äänestyksen id numero.
+    let emptyList = document.getElementById('users'); // Tyhjennetään edellinen lista jotta kyseessä on aina päivitetty versio
+    emptyList.innerHTML = "";
     let header = userData[link].username; // Id numeroa käytetään apuna kohdennettaessa äänestyksen nimi ja äänestyskohteet
     document.getElementById('userHeader').innerText = header; // Määritetään modaalin otsikko
-   // print = userData[link].printInfo();
-   // document.getElementById('users').innerHTML = print;
-    
+    //userData[link].users.forEach(users => {
+        let fname = userData[link].firstname;
+        let fnElement = document.createElement('h4');
+        let fnText = document.createTextNode("Firstname: " + fname);
+        fnElement.appendChild(fnText);
+        document.querySelector('#users').appendChild(fnElement);
+        let lname = userData[link].lastname;
+        let lnElement = document.createElement('h4');
+        let lnText = document.createTextNode("Lastname: " + lname);
+        lnElement.appendChild(lnText);
+        document.querySelector('#users').appendChild(lnElement);
+        let address = userData[link].address;
+        let adElement = document.createElement('h4');
+        let adText = document.createTextNode("Address: " + address);
+        adElement.appendChild(adText);
+        document.querySelector('#users').appendChild(adElement);
+        let zipcode = userData[link].zipcode;
+        let zipElement = document.createElement('h4');
+        let zipText = document.createTextNode("Zipcode: " + zipcode);
+        zipElement.appendChild(zipText);
+        document.querySelector('#users').appendChild(zipElement);
+        let email = userData[link].email;
+        let eElement = document.createElement('h4');
+        let eText = document.createTextNode("Email: " + email);
+        eElement.appendChild(eText);
+        document.querySelector('#users').appendChild(eElement);
+        let username = userData[link].username;
+        let uElement = document.createElement('h4');
+        let uText = document.createTextNode("Username: " + username);
+        uElement.appendChild(uText);
+        document.querySelector('#users').appendChild(uElement);
+        let password = userData[link].password;
+        let pElement = document.createElement('h4');
+        let pText = document.createTextNode("Password: " + password);
+        pElement.appendChild(pText);
+        document.querySelector('#users').appendChild(pElement);
+        
+   // })
+    /*
+    print = userData[link].printInfo();
+    let printElement = document.createElement('p');
+    let printText = document.createTextNode(print);
+    printElement.appendChild(printText);
+    //document.getElementById('users').innerHTML = print;
+    document.querySelector('#users').appendChild(printElement);
+    */
 }
 
 // Poistetaan käyttäjä:
 
 function deleteUser(){
+    userData = JSON.parse(localStorage.getItem('users'));
     users.splice(link, 1);
     localStorage.setItem('users', JSON.stringify(users));
     createListOfUsers();
