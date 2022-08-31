@@ -1,11 +1,9 @@
 window.addEventListener('load', createListOfVotes);
+window.addEventListener('load', createListOfUsers);
 let username = "";
 let password = "";
-let admin = {
-    username: "yllapito",
-    password: "lintu", 
-};
-const users = [admin];
+
+const users = [];
 const votes = [];
 let candidates = []; //äänestys kohteet
 let data;
@@ -23,6 +21,10 @@ function User(firstname, lastname, address, zipcode, email, username, password){
     this.email = email;
     this.username = username;
     this.password = password;
+    /*
+    this.printInfo = function(){
+        return "Firstname: " + this.firstname + "<br/>" + "Lastname: " + this.lastname + "<br/>" + "Address: " + this.address + "<br/>" + "Zipcode: " + this.zipcode + "<br/>" + "Email: " + this.email;
+    }*/
 }
 
 function Candidate(name, votes){
@@ -38,10 +40,12 @@ function Vote(VoteName, candidates){
 let addCandBtn = document.getElementById('btn-addCand');
 let addVoteBtn = document.getElementById('btn-addVote');
 let deleteBtn = document.getElementById('btn-deleteVote');
+let deleteUserBtn = document.getElementById('btn-deleteUser');
 
 addCandBtn.addEventListener('click', addCandidate);
 addVoteBtn.addEventListener('click', addVote);
 deleteBtn.addEventListener('click', deleteItem);
+deleteUserBtn.addEventListener('click', deleteUser);
 
 // Rekisteröityminen:
 
@@ -67,6 +71,8 @@ function addUser(){
     document.getElementById("email").value = "";
     document.getElementById("username").value = "";
     document.getElementById("password").value = "";
+
+    createListOfUsers();
 }
 
 // Sisäänkirjautuminen:
@@ -81,7 +87,7 @@ function logIn(){
             inList = true;
             window.open('/vote.html');
         }
-        if (appliedName == 'yllapito' && appliedPassword == 'lintu'){
+        if (appliedName == 'admin' && appliedPassword == 'qwerty'){
             inList = true;
             window.open('/admin.html');
         }
@@ -145,13 +151,14 @@ function createListOfVotes(){
         voteElement.id = index;
         voteElement.href = "#voteDetails"; // Linkki avaa modaalin
         let linebreak = document.createElement('br');
-        voteElement.addEventListener('click', createVoteModal);
         document.querySelector('#printArea').appendChild(voteElement);
         document.querySelector('#printArea').appendChild(linebreak);
         voteElement.addEventListener('click', createVoteModal);
         index++;
     }
 }
+
+// Luodaan modaali: 
 
 function createVoteModal(event){
     let btnIndex = 0;
@@ -185,9 +192,61 @@ function createVoteModal(event){
     })
 }
 
+// Poistetaan äänestys: 
+
 function deleteItem(){
     //data = JSON.parse(localStorage.getItem('votes'));
     votes.splice(link, 1);
     localStorage.setItem('votes', JSON.stringify(votes))
     createListOfVotes();
+}
+
+function createListOfUsers(){
+    let index = 0;
+    let emptyList = document.getElementById('printArea2'); // Tyhjennetään edellinen lista jotta kyseessä on aina päivitetty versio
+    emptyList.innerHTML = "";
+    userData = JSON.parse(localStorage.getItem('users')); // Tuodaan sen hetkisestä tietokannasta tiedot käytettäväksi
+    console.log(userData)
+    for (let i = 0; i < userData.length; i++){
+        let username = userData[i].username; 
+        let name = username;
+        let userElement = document.createElement('a');
+        let userTitle = document.createTextNode(name);
+        userElement.appendChild(userTitle);
+        userElement.className = 'user-item';
+        userElement.setAttribute('data-bs-toggle', 'modal');
+        //userElement.setAttribute('data-vote', index);
+        userElement.id = index;
+        userElement.href = "#userDetails"; // Linkki avaa modaalin
+        let linebreak = document.createElement('br');
+        document.querySelector('#printArea2').appendChild(userElement);
+        document.querySelector('#printArea2').appendChild(linebreak);
+        userElement.addEventListener('click', createUserModal);
+        //userElement.addEventListener('click', printInfo);
+        index++;
+    }
+    
+}
+
+// Tulostetaan käyttäjän tiedot modaaliin:
+
+function createUserModal(event){
+   // let print = "";
+   // let emptyList = document.getElementById('users');
+   // emptyList.innerHTML = ""; // Tyhjennetään tulostusalue listasta
+    
+    link = event.target.id; // Otetaan talteen äänestyksen id numero.
+    let header = userData[link].username; // Id numeroa käytetään apuna kohdennettaessa äänestyksen nimi ja äänestyskohteet
+    document.getElementById('userHeader').innerText = header; // Määritetään modaalin otsikko
+   // print = userData[link].printInfo();
+   // document.getElementById('users').innerHTML = print;
+    
+}
+
+// Poistetaan käyttäjä:
+
+function deleteUser(){
+    users.splice(link, 1);
+    localStorage.setItem('users', JSON.stringify(users));
+    createListOfUsers();
 }
