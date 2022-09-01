@@ -5,12 +5,17 @@ let username = "";
 let password = "";
 
 const users = []; // Array käyttäjät
+let user = users;
+let userData = user; // Muodostetaan datasta array ja viedään se localStrorageen:
+localStorage.setItem('users', JSON.stringify(userData)); // viedään userData localstorageen JSON stringinä. Näin localstorage ei ole tyhjä alussa 
 const votes = []; // Array äänestykset
+let vote = votes;
+let data = vote; // Muodostetaan datasta array ja viedään se localStrorageen:
+localStorage.setItem('votes', JSON.stringify(data));
 let candidates = []; //äänestys kohteet
-let data = JSON.parse(localStorage.getItem('votes')); // Tieto parsittu js-objektiksi. (Parsitaan JSON-string javaScript-objektiksi, jolloin sitä voi helposti käsitellä).
-let userData = JSON.parse(localStorage.getItem('users')); // Tieto parsittu js-objektiksi. (Parsitaan JSON-string javaScript-objektiksi, jolloin sitä voi helposti käsitellä).
 let link; // muuttuja id:n arvolle
 let newVotes;
+
 
 //Konstruktorit:
 function User(firstname, lastname, address, zipcode, email, username, password){
@@ -47,6 +52,7 @@ deleteUserBtn.addEventListener('click', deleteUser);
 // Rekisteröityminen:
 
 function addUser(){
+    userData = JSON.parse(localStorage.getItem('users')); // Tieto parsittu js-objektiksi. (Parsitaan JSON-string javaScript-objektiksi, jolloin sitä voi helposti käsitellä).
     // Muuttujille input-kenttien arvot:
     let firstname = document.getElementById("firstname").value;
     let lastname = document.getElementById("lastname").value;
@@ -56,9 +62,9 @@ function addUser(){
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
 
-    let user = new User(firstname, lastname, address, zipcode, email, username, password); // Muodostetaan uusi user-olio
+    user = new User(firstname, lastname, address, zipcode, email, username, password); // Muodostetaan uusi user-olio
     userData.push(user); // Lisätään user parsittuun tietokantaan
-
+    
     localStorage.setItem('users', JSON.stringify(userData)); // viedään userData localstorageen JSON stringinä
     
     document.getElementById("firstname").value = ""; // Input-kentät tyhjiksi
@@ -113,8 +119,10 @@ function addCandidate(){
 // Luodaan äänestys ja viedään se tietokantaan (localstorage):
 
 function addVote(){
+    data = JSON.parse(localStorage.getItem('votes')); // Tieto parsittu js-objektiksi. (Parsitaan JSON-string javaScript-objektiksi, jolloin sitä voi helposti käsitellä).
+    
     let VoteName = document.querySelector('#vote-name input[type="text"]').value; //Äänestyksen nimi otetaan talteen
-    let vote = new Vote(VoteName, candidates); // Luodaan äänestys olio, jolla nimi ja äänestettävät asiat
+    vote = new Vote(VoteName, candidates); // Luodaan äänestys olio, jolla nimi ja äänestettävät asiat
     data.push(vote); // Lisätään äänestys äänestysten arraylle
 
     localStorage.setItem('votes', JSON.stringify(data)); // Viedään localstorageen JSON-stringiksi muutettu tieto
