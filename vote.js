@@ -4,7 +4,6 @@ let data;
 let votes;
 let candidates;
 let voteElement;
-//let link;
 let item;
 let votearea = document.getElementById('votearea');
 
@@ -12,8 +11,8 @@ let votearea = document.getElementById('votearea');
 
 function createListOfVotes(){
     let index = 0;
-    let emptyList = document.getElementById('printArea3'); // Tyhjennetään edellinen lista jotta kyseessä on aina päivitetty versio
-    emptyList.innerHTML = "";
+    let emptyList = document.getElementById('printArea3');
+    emptyList.innerHTML = ""; // Tyhjennetään edellinen lista jotta kyseessä on aina päivitetty versio
     data = JSON.parse(localStorage.getItem('votes'));
     console.log(data)
     for (let i = 0; i < data.length; i++){
@@ -25,31 +24,18 @@ function createListOfVotes(){
         voteElement.className = 'vote-item';
         voteElement.id = index;
         voteElement.setAttribute('data-vote', index);
-        voteElement.href = "#printArea4"; // Tähän linkkiosoite
+        voteElement.href = "#printArea4"; 
         let linebreak = document.createElement('br');
         document.querySelector('#printArea3').appendChild(voteElement);
         document.querySelector('#printArea3').appendChild(linebreak);
         voteElement.addEventListener('click', selectVote);
         index++;
     }
-    /*data.votes.forEach(votes => {
-        let votename = VoteName;
-        let voteElement = document.createElement('a');
-        let voteTitle = document.createTextNode(votename);
-        voteElement.appendChild(voteTitle);
-        voteElement.className = 'vote-item';
-        voteElement.href = "#"; // Tähän linkkiosoite
-        let linebreak = document.createElement('br');
-        document.querySelector('#printArea3').appendChild(voteElement);
-        document.querySelector('#printArea3').appendChild(linebreak);
-        index++;
-    })*/
 }
 
 // Tuodaan tiedot äänestyksestä html-sivulle:
 
 function selectVote(event){
-    //votearea.style.display = "block";
     item = event.target.id;
     console.log(item);
     let btnIndex = 0;
@@ -87,39 +73,21 @@ function selectVote(event){
         newElem3.addEventListener('click', vote);
         btnIndex++;
     })
-    /*
-    let closeBtn = document.createElement('button');
-    let closeText = document.createTextNode('Close vote');
-    let horizontal2 = document.createElement('hr');
-    closeBtn.appendChild(closeText);
-    closeBtn.className = 'btn btn-primary';
-    closeBtn.addEventListener('click', closeArea);
-    document.querySelector('#printArea4').appendChild(horizontal2);
-    document.querySelector('#printArea4').appendChild(closeBtn);*/
 }
 
 // Äänestetään:
 
 function vote(event){
     let nro = event.target.id;
-    let aanet = data[item].candidates[nro].newVotes = data[item].candidates[nro].newVotes + 1;
+    data[item].candidates[nro].newVotes = data[item].candidates[nro].newVotes + 1;
     localStorage.setItem('votes', JSON.stringify(data)); // HUOM!!! stringify DATA! ei votes
-    //data = JSON.parse(localStorage.getItem('votes'));
-    console.log(nro);
-    console.log(aanet);
+   
     upDateVote(event); 
 }
 
-// Sulkee äänestyksen:
-/*
-function closeArea(){
-    votearea.style.display = "none";
-}*/
+// Päivitetään äänestystulokset:
 
-function upDateVote(event){
-    //votearea.style.display = "block";
-    //item = event.target.id;
-    console.log(item);
+function upDateVote(){
     let btnIndex = 0;
     let emptyList = document.getElementById('printArea4');
     emptyList.innerHTML = ""; // Tyhjennetään tulostusalue listasta
@@ -155,13 +123,4 @@ function upDateVote(event){
         newElem3.addEventListener('click', vote);
         btnIndex++;
     })
-    /*
-    let closeBtn = document.createElement('button');
-    let closeText = document.createTextNode('Close vote');
-    let horizontal2 = document.createElement('hr');
-    closeBtn.appendChild(closeText);
-    closeBtn.className = 'btn btn-primary';
-    closeBtn.addEventListener('click', closeArea);
-    document.querySelector('#printArea4').appendChild(horizontal2);
-    document.querySelector('#printArea4').appendChild(closeBtn);*/
 }
