@@ -1,14 +1,14 @@
 window.addEventListener('load', createListOfVotes); // Funktio suoritetaan ikkunan latautuessa: äänestykset näkyviin
 window.addEventListener('load', createListOfUsers); // Funktio suoritetaan ikkunan latautuessa: käyttäjät näkyviin
-
+// Globaalit muuttujat:
 let username = "";
 let password = "";
 
-const users = [];
-const votes = [];
+const users = []; // Array käyttäjät
+const votes = []; // Array äänestykset
 let candidates = []; //äänestys kohteet
-let data;
-let userData = JSON.parse(localStorage.getItem('users')); // Tieto parsittu js-objektiksi
+let data = JSON.parse(localStorage.getItem('votes')); // Tieto parsittu js-objektiksi. (Parsitaan JSON-string javaScript-objektiksi, jolloin sitä voi helposti käsitellä).
+let userData = JSON.parse(localStorage.getItem('users')); // Tieto parsittu js-objektiksi. (Parsitaan JSON-string javaScript-objektiksi, jolloin sitä voi helposti käsitellä).
 let link; // muuttuja id:n arvolle
 let newVotes;
 
@@ -47,8 +47,7 @@ deleteUserBtn.addEventListener('click', deleteUser);
 // Rekisteröityminen:
 
 function addUser(){
-    //userData = JSON.parse(localStorage.getItem('users'));
-
+    // Muuttujille input-kenttien arvot:
     let firstname = document.getElementById("firstname").value;
     let lastname = document.getElementById("lastname").value;
     let address = document.getElementById("address").value;
@@ -114,14 +113,12 @@ function addCandidate(){
 // Luodaan äänestys ja viedään se tietokantaan (localstorage):
 
 function addVote(){
-    
     let VoteName = document.querySelector('#vote-name input[type="text"]').value; //Äänestyksen nimi otetaan talteen
     let vote = new Vote(VoteName, candidates); // Luodaan äänestys olio, jolla nimi ja äänestettävät asiat
-    votes.push(vote); // Lisätään äänestys äänestysten arraylle
+    data.push(vote); // Lisätään äänestys äänestysten arraylle
 
-    localStorage.setItem('votes', JSON.stringify(votes)); // Viedään localstorageen JSON-stringiksi muutettu tieto
-    data = JSON.parse(localStorage.getItem('votes')); // parsitaan JSON-string javaScript-objektiksi (jolloin sitä voi helposti käsitellä)
-
+    localStorage.setItem('votes', JSON.stringify(data)); // Viedään localstorageen JSON-stringiksi muutettu tieto
+    
     document.querySelector('#vote-name input[type="text"]').value = ""; // Tyhjennetään input-kenttä
     let emptyList = document.getElementById('item-list');
     emptyList.innerHTML = ""; // Tyhjennetään tulostusalue listasta
@@ -195,8 +192,8 @@ function createVoteModal(event){
 // Poistetaan äänestys: 
 
 function deleteItem(){
-    votes.splice(link, 1); // Poistaa linkin arvon osoittaman olion arraylta
-    localStorage.setItem('votes', JSON.stringify(votes)); // Päivittää localstoragen
+    data.splice(link, 1); // Poistaa linkin arvon osoittaman olion arraylta
+    localStorage.setItem('votes', JSON.stringify(data)); // Päivittää localstoragen
     createListOfVotes(); // Päivitetään tulostus
 }
 
