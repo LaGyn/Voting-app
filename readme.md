@@ -1,3 +1,3 @@
 Ylläpito kirjautuu sivulle:
-User name: admin
-password: qwerty
+User name: yllapito
+password: lintu
