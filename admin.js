@@ -81,13 +81,13 @@ function logIn(){
     let inList = false;
     if (appliedName == 'yllapito' && appliedPassword == 'lintu'){
         inList = true;
-        window.open('/admin.html');
+        window.open('admin.html');
     }
     // Käydään tietokanta läpi löytyykö käyttäjänimeä ja salasanaa:
     for (let i = 0; i < userData.length; i++){ 
         if (userData[i].username == appliedName && userData[i].password == appliedPassword){
             inList = true;
-            window.open('/vote.html');
+            window.open('vote.html');
         }
     }
 }
