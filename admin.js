@@ -49,6 +49,7 @@ deleteUserBtn.addEventListener('click', deleteUser);
 // Rekisteröityminen:
 
 function addUser(){
+    userData = JSON.parse(localStorage.getItem('users'));
     let firstname = document.getElementById("firstname").value;
     let lastname = document.getElementById("lastname").value;
     let address = document.getElementById("address").value;
@@ -59,10 +60,10 @@ function addUser(){
 
     let user;
     user = new User(firstname, lastname, address, zipcode, email, username, password);
-    users.push(user);
+    userData.push(user);
 
-    localStorage.setItem('users', JSON.stringify(users));
-    userData = JSON.parse(localStorage.getItem('users'));
+    localStorage.setItem('users', JSON.stringify(userData));
+    
 
     document.getElementById("firstname").value = ""; // Input-kentät tyhjiksi
     document.getElementById("lastname").value = "";
@@ -288,7 +289,7 @@ function createUserModal(event){
 
 function deleteUser(){
     userData = JSON.parse(localStorage.getItem('users'));
-    users.splice(link, 1);
-    localStorage.setItem('users', JSON.stringify(users));
+    userData.splice(link, 1);
+    localStorage.setItem('users', JSON.stringify(userData));
     createListOfUsers();
 }
