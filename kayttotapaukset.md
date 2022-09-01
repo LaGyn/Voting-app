@@ -4,7 +4,7 @@ Nimi: Selailee äänestyksiä
 Käyttäjät: User
 Laukaisija: Käyttäjän toimesta.
 Esiehto: Käyttäjä on seurannut www-linkkiä, rekisteröitynyt ja kirjautunut sivustolle.
-Jälkiehto: -
+Jälkiehto: Äänestyksiä on luotu.
 Käyttötapauksen kulku: Käyttäjä seuraa www-linkkiä, joka johtaa sovelluksen etusivulle. Mikäli käyttäjä haluaa katsoa äänestyksiä,osallistua äänestykseen tai katsoa äänestystilanteen, on hänen rekisteröidyttävä sekä kirjauduttava sivustolle.
 Poikkeuksellinen toiminta: Sivua ei löydy.
 
@@ -12,7 +12,7 @@ Nimi: Valitsee äänestyksen
 Käyttäjät: User
 Laukaisija: Kun käyttäjä on klikannut ko. äänestystä.
 Esiehto: Kun rekisteröinti ja kirjautuminen on tehty.
-Jälkiehto: -
+Jälkiehto: Äänestys on luotu.
 Käyttötapauksen kulku: Käyttäjä kirjautuu sivustolle syöttämällä käyttäjätunnuksen sekä salasanan. Kirjautumisen jälkeen eteen aukeaa äänestykset, joita käyttäjä voi selata ja valita jonkin äänestyksistä, jota haluaa tarkastella tai äänestää. Klikkaamalla äänestystä käyttäjä suorittaa valinnan.
 Poikkeuksellinen toiminta: Äänestystä ei löydy.
 
@@ -20,7 +20,7 @@ Nimi: Katsoo äänestystilanteen
 Käyttäjät: User
 Laukaisija: Käyttäjän toimesta.
 Esiehto: Käyttäjä on rekisteröitynyt ja kirjautunut.
-Jälkiehto: Käyttäjä on valinnut äänestyksen.
+Jälkiehto: Äänestys on luotu. Käyttäjä on valinnut äänestyksen.
 Käyttötapauksen kulku: Valittuaan äänestyksen klikkaamalla eteen avautuu ko. äänestyksen äänestystilanne.
 Poikkeuksellinen toiminta: Äänestystä ei löydy.
 
@@ -28,7 +28,7 @@ Nimi: Äänestää valitsemassa äänestyksessä
 Käyttäjät: User
 Laukaisija: Käyttäjän toimesta.
 Esiehto: Käyttäjä on rekisteröitynyt ja kirjautunut.
-Jälkiehto: Käyttäjä on valinnut äänestyksen.
+Jälkiehto: Äänestys on luotu. Käyttäjä on valinnut äänestyksen.
 Käyttötapauksen kulku: Valittuaan äänestyksen käyttäjä voi tarkastella äänestystä sekä äänestää. Äänestys tapahtuu samalla sivulla äänestyspainikkeilla.
 Poikkeuksellinen toiminta: Äänestys ei onnistu. 
 
