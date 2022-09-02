@@ -58,7 +58,7 @@ deleteUserBtn.addEventListener('click', deleteUser);
 // Rekisteröityminen:
 
 function addUser(){
-    userData = JSON.parse(localStorage.getItem('users')); // Tieto parsittu js-objektiksi. (Parsitaan JSON-string javaScript-objektiksi, jolloin sitä voi helposti käsitellä).
+    //userData = JSON.parse(localStorage.getItem('users')); // Tieto parsittu js-objektiksi. (Parsitaan JSON-string javaScript-objektiksi, jolloin sitä voi helposti käsitellä).
     // Muuttujille input-kenttien arvot:
     let firstname = document.getElementById("firstname").value;
     let lastname = document.getElementById("lastname").value;
@@ -125,7 +125,7 @@ function addCandidate(){
 // Luodaan äänestys ja viedään se tietokantaan (localstorage):
 
 function addVote(){
-    data = JSON.parse(localStorage.getItem('votes')); // Tieto parsittu js-objektiksi. (Parsitaan JSON-string javaScript-objektiksi, jolloin sitä voi helposti käsitellä).
+    //data = JSON.parse(localStorage.getItem('votes')); // Tieto parsittu js-objektiksi. (Parsitaan JSON-string javaScript-objektiksi, jolloin sitä voi helposti käsitellä).
     
     let VoteName = document.querySelector('#vote-name input[type="text"]').value; //Äänestyksen nimi otetaan talteen
     let vote = new Vote(VoteName, candidates); // Luodaan äänestys olio, jolla nimi ja äänestettävät asiat
