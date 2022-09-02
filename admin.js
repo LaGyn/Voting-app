@@ -8,6 +8,7 @@ if (votes != null){
 }
 else {
     votes = [];
+    localStorage.setItem('votes', JSON.stringify(votes));
 }
 let users = localStorage.getItem('users');
 if (users != null){
@@ -15,6 +16,7 @@ if (users != null){
 }
 else {
     users = [];
+    localStorage.setItem('users', JSON.stringify(users));
 }
 
 let userData; 
